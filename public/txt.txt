@@ -1,0 +1,11 @@
+   <div className="text-black block md:hidden" >
+            {showResIcon ? (
+              <div className="py-1 px-2 md:hidden font-semibold text-white">
+                <FaBars fontSize={24} />
+              </div>
+            ) : (
+              <div className="py-1 px-2 md:hidden font-semibold text-white">
+                <RxCross2 fontSize={28} />
+              </div>
+            )}
+          </div>

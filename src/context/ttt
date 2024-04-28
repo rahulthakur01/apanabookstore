@@ -1,0 +1,273 @@
+ //  if(user){
+  //   const collectionRef = collection(fireStore, "books");
+  //   const q = query(collectionRef, where("userID", "==", user.uid));
+
+  //   const result = await getDocs(q);
+  //   console.log(result)
+  //  }else {
+  //   console.log("User is not logged in."); // Optional: Handle the case where user is not logged in
+  // }
+  // if(!user) {
+  //   console.log("user not logged in ");
+  //   return null
+  // }
+//   useEffect(() => {
+//     const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
+//       setUser(user);
+//     });
+//     // Cleanup function to unsubscribe from the listener when the component unmounts
+//     return () => unsubscribe();
+//   }, []);
+
+
+{/* 
+        <div className="flex items-center border-red-500 gap-2 navbar-buttons">
+          {!isLoggedIn && (
+            <NavLink to="/login">
+              <button className="bg-richblack-800 text-white px-[12px] py-[10px] rounded-[8px] border border-richblack-700">
+                Login
+              </button>
+            </NavLink>
+          )}
+
+          {!isLoggedIn && (
+            <NavLink to="/register">
+              <button className="bg-richblack-800 text-richblack-100 px-[12px] py-[10px] text-white rounded-[8px] border border-richblack-700">
+                Signup
+              </button>
+            </NavLink>
+          )}
+          {isLoggedIn && (
+            <NavLink to="/">
+              <button
+                onClick={() => {
+                  setIsLoggedIn(false);
+                  toast.success("Logged out");
+                }}
+                className="bg-richblack-800 text-richblack-100 px-[12px] py-[10px] text-white rounded-[8px] border border-richblack-700"
+              >
+                Log Out
+              </button>
+            </NavLink>
+          )}
+        </div> */}
+
+
+
+
+
+
+
+
+
+      //   <Nav.Item >
+      //   {!isLoggedIn && (
+      //     <NavLink to="/login">
+      //       <button className="bg-richblack-800 text-white px-[12px] py-[10px] rounded-[8px] border border-richblack-700">
+      //         Login
+      //       </button>
+      //     </NavLink>
+      //   )}
+      // </Nav.Item>
+      // <Nav.Item>
+      //   {!isLoggedIn && (
+      //     <NavLink to="/register">
+      //       <button className="bg-richblack-800 text-richblack-100 px-[12px] py-[10px] text-white rounded-[8px] border border-richblack-700">
+      //         Signup
+      //       </button>
+      //     </NavLink>
+      //   )}
+      // </Nav.Item>
+      // <Nav.Item>
+      //   {isLoggedIn && (
+      //     <NavLink to="/">
+      //       <button
+      //         onClick={() => {
+      //           setIsLoggedIn(false);
+      //           toast.success("Logged out");
+      //         }}
+      //         className="bg-richblack-800 text-richblack-100 px-[12px] py-[10px] text-white rounded-[8px] border border-richblack-700"
+      //       >
+      //         Log Out
+      //       </button>
+      //     </NavLink>
+      //   )}
+      // </Nav.Item>
+
+
+
+
+
+      import React, { useState } from "react";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { NavLink } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
+import DropDown from "./DropDown";
+import { FaBars } from "react-icons/fa";
+import { RxCross2 } from "react-icons/rx";
+
+function Header(props) {
+  let isLoggedIn = props.isLoggedIn;
+  let setIsLoggedIn = props.setIsLoggedIn;
+  const [showDropIcon, setShowDropIcon] = useState(false);
+  const [showResIcon, setShowResIcon] = useState(false);
+  const [showNavLinks, setShowNavLinks] = useState(false); // Added showNavLinks state
+
+  function dropDownHandler() {
+    setShowDropIcon((state) => !state);
+  }
+
+  function barHandler() {
+    setShowResIcon((state) => !state);
+    setShowNavLinks((state) => !state); // Toggling showNavLinks state
+  }
+
+  return (
+    <div className="w-full">
+      <Navbar className="bg-slate-600 flex justify-between z-30 h-[5rem] fixed top-0 w-full navbar">
+        <div className="flex justify-between logo-bar">
+          <div>
+            <p className="text-black">Logo</p>
+          </div>
+          <div className="text-black block md:hidden" onClick={barHandler}>
+            {showResIcon ? (
+              <div className="py-1 px-2 md:hidden font-semibold">
+                <RxCross2 fontSize={28} fill="#AFB2BF" />
+              </div>
+            ) : (
+              <div className="py-1 px-3 md:hidden font-semibold">
+                <FaBars />
+              </div>
+            )}
+          </div>
+        </div>
+        {/* Conditionally render navlinks and buttons based on the showNavLinks state */}
+        {showNavLinks && (
+          <div className="flex items-center gap-8 justify-between navlinks">
+            <div className="hhhh">
+              <Nav className="w-full flex items-center gap-2 nav">
+                <Nav.Link href="/" className="nav-item">
+                  Home
+                </Nav.Link>
+                <Nav.Link href="/book/list">Add List</Nav.Link>
+                <Nav.Link href="/book/orders">Order</Nav.Link>
+                <div className="flex items-center relative">
+                  <Nav.Link href="/book/list">Document</Nav.Link>
+                  <div>
+                    <div className="text-white" onClick={dropDownHandler}>
+                      {showDropIcon ? (
+                        <RiArrowDropDownLine fontSize={28} fill="#AFB2BF" />
+                      ) : (
+                        <RiArrowDropUpLine fontSize={28} fill="#AFB2BF" />
+                      )}
+                    </div>
+                    {showDropIcon && <DropDown setShowDropIcon={setShowDropIcon} />}
+                  </div>
+                </div>
+              </Nav>
+            </div>
+
+            <div className="navitem-button">
+              <div className="flex items-center border-red-500 gap-2 navbar-buttons">
+                {!isLoggedIn && (
+                  <NavLink to="/login">
+                    <button className="bg-richblack-800 text-white px-[12px] py-[10px] rounded-[8px] border border-richblack-700">
+                      Login
+                    </button>
+                  </NavLink>
+                )}
+
+                {!isLoggedIn && (
+                  <NavLink to="/register">
+                    <button className="bg-richblack-800 text-richblack-100 px-[12px] py-[10px] text-white rounded-[8px] border border-richblack-700">
+                      Signup
+                    </button>
+                  </NavLink>
+                )}
+                {isLoggedIn && (
+                  <NavLink to="/">
+                    <button
+                      onClick={() => {
+                        setIsLoggedIn(false);
+                        toast.success("Logged out");
+                      }}
+                      className="bg-richblack-800 text-richblack-100 px-[12px] py-[10px] text-white rounded-[8px] border border-richblack-700"
+                    >
+                      Log Out
+                    </button>
+                  </NavLink>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </Navbar>
+    </div>
+  );
+}
+
+export default Header;
+      // console.log(uploadedResult)
+   // await addDoc(collection, {
+      //   filename: pdfFile.name,
+      //   path: uploadedResult.ref.fullPath,
+      // });
+      // return uploadedResult.ref.fullPath;
+
+      //   const getPdfUrl = async (file) => {
+//     try {
+//         const storageRef = ref(storage, file);
+//         const url = await getDownloadURL(storageRef);
+//         return url;
+//     } catch (error) {
+//         console.error("Error getting PDF URL:", error);
+//         return null;
+//     }
+// };
+
+
+display: none;    {/* <Nav className=" w-full flex items-center gap-2 nav " >
+<Nav.Link href="/" className="nav-item text-white font-semibold">
+  Home
+</Nav.Link>
+<Nav.Link href="/book/list" className="text-white font-semibold">Add List</Nav.Link>
+<Nav.Link href="/book/orders" className="text-white font-semibold">Order</Nav.Link>
+{/* <div className="flex items-center relative">
+  <Nav.Link href="/book/list" className="text-white font-semibold">Document</Nav.Link>
+  <div>
+    <div className="text-white" onClick={dropDownHandler}>
+      {showDropIcon ? (
+        <RiArrowDropDownLine fontSize={28} fill="#AFB2BF" />
+      ) : (
+        <RiArrowDropUpLine fontSize={28} fill="#AFB2BF" />
+      )}
+    </div>
+    {showDropIcon && (
+      <DropDown setShowDropIcon={setShowDropIcon} />
+    )}
+  </div>
+</div> */}
+{/* </Nav> */}
+
+
+ {/* <Card style={{  width:"15rem", height:"10rem", margin: "12px" }}>
+        <div className="">
+          <Card.Img variant="top" src={url} className="" style={{  objectFit: "cover" }} />
+
+          <Card.Body>
+
+            <Card.Title>{props.name}</Card.Title>
+            <Card.Text>{props.price}</Card.Text>
+            <Button onClick={(e) => navigate(props.link)} variant="primary" className="w-full mt-2">
+              view
+            </Button>
+          </Card.Body>
+        </div>
+      </Card> */}
+        {/* <div className="object-cover">
+        <img src={url} className="w-[300px] h-[300px] mt-4 "/>
+      </div>
+      <div> */}
+fill="#ADB2BF"
